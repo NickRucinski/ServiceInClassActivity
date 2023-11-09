@@ -5,17 +5,26 @@ import android.content.Intent
 import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.widget.Button
+import android.widget.TextView
 import java.sql.Time
 
 class MainActivity : AppCompatActivity() {
     private lateinit var timerBinder: TimerService.TimerBinder
     private var mBound: Boolean = false
+    lateinit var timerTextView: TextView
+    val timerHandler = Handler(Looper.getMainLooper()){
+        timerTextView.text = it.what.toString()
+        true
+    }
 
     val connection = object : ServiceConnection{
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerBinder = service as TimerService.TimerBinder
+            timerBinder.setHandler(timerHandler)
             mBound = true
         }
 
@@ -32,6 +41,8 @@ class MainActivity : AppCompatActivity() {
             BIND_AUTO_CREATE
         )
 
+        timerTextView = findViewById<TextView>(R.id.textView)
+
         findViewById<Button>(R.id.startButton).setOnClickListener {
             if(mBound){
                 timerBinder.start(100)
@@ -47,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.stopButton).setOnClickListener {
             if(mBound){
                 timerBinder.stop()
+                timerTextView.text = ""
             }
         }
     }
