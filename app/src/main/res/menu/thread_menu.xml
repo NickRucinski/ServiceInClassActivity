@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Start" />
-    <item android:title="Pause" />
-    <item android:title="Stop" />
+    <item
+        android:id="@+id/startButton"
+        android:icon="@drawable/play_arrow_24px"
+        android:title="Start"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/pauseButton"
+        android:icon="@drawable/pause_24px"
+        android:title="Pause"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/stopButton"
+        android:icon="@drawable/stop_24px"
+        android:title="Stop"
+        app:showAsAction="ifRoom" />
 </menu>

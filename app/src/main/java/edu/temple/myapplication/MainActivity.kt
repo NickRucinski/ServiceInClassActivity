@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import java.sql.Time
@@ -60,6 +63,38 @@ class MainActivity : AppCompatActivity() {
                 timerBinder.stop()
                 timerTextView.text = ""
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.thread_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection.
+        return when (item.itemId) {
+            R.id.startButton -> {
+                if(mBound){
+                    timerBinder.start(100)
+                }
+                true
+            }
+            R.id.pauseButton -> {
+                if(mBound){
+                    timerBinder.pause()
+                }
+                true
+            }
+            R.id.stopButton -> {
+                if(mBound){
+                    timerBinder.stop()
+                    timerTextView.text = ""
+                }
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
